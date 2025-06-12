@@ -19,7 +19,7 @@ spec:
           persistentVolumeClaim:
             claimName: wordpress
       containers:
-      - image: wordpress
+      - image: wordpress:php8.2-apache
         name: wordpress
         env:
           - name: WORDPRESS_DB_HOST
