@@ -1,12 +1,11 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
   name: wordpress
 spec:
   storageClassName: standard
   accessModes:
     - ReadWriteOnce
-  capacity:
-    storage: 100Mi
-  hostPath:
-    path: /data/wordpress/
+  resources:
+    requests:
+      storage: 100Mi
