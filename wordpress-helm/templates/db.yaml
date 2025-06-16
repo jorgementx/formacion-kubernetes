@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: db-svc
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:8.0
+          volumeMounts:
+            - name: data-vol
+              mountPath: /var/lib/mysql
+          envFrom:
+            - configMapRef:
+                name: mysql-env
+          ports:
+            - containerPort: 80
+  volumeClaimTemplates:
+    - metadata:
+        name: data-vol
+      spec:
+        accessModes:
+          - ReadWriteOncePod
+        resources:
+          requests:
+            storage: {{ .Values.db.storage.size }}
+        storageClassName: {{ .Values.db.storage.class }}

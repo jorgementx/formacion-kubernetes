@@ -1,0 +1,20 @@
+# fullnameOverride: ""
+# nameOverride: ""
+db:
+  user: exampledb
+  password: examplepass
+  name: root
+  rootPassword: exampleuser
+  host: db-svc
+  storage:
+    size: 1Gi
+    class: standard
+wordpress:
+  replicas: 4
+  image: wordpress:php8.2-apache
+  service:
+    type: LoadBalancer
+    port: 80
+  pvc:
+    class: standard
+    size: 100Mi

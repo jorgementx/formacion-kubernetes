@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: wordpress
+  name: wordpress
+  namespace: {{ .Release.Namespace }}
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: {{ .Values.wordpress.service.port }}
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: wordpress
+  type: {{ .Values.wordpress.service.type }}
